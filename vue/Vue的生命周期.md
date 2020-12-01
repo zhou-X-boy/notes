@@ -57,7 +57,7 @@
 >
 > 对应的钩子函数是destroyed。在销毁后，会触发destroyed钩子函数。
 
-![Vue生命周期](D:\text\vue\Vue生命周期.png)
+![Vue生命周期](D:\Study\notes\vue\Vue的生命周期.assets\Vue生命周期.png)
 
 ```html
 
@@ -143,99 +143,24 @@
 
 >  接下来的是运行中的两个事件
 >
-> ##### 当执行 beforeUpdate 的时候，页面中的显示的数据，还是旧的，此时 data 数据是最新的，页面尚未和 最新的数据保持同步
+>  ##### 当执行 beforeUpdate 的时候，页面中的显示的数据，还是旧的，此时 data 数据是最新的，页面尚未和 最新的数据保持同步
 >
-> ```javascript
+>  ```javascript
 >  beforeUpdate:function() { // 这时候，表示 我们的界面还没有被更新【数据被更新了吗？  数据肯定被更新了】
->         /* console.log('界面上元素的内容：' + document.getElementById('h3').innerText)
->         console.log('data 中的 msg 数据是：' + this.msg) */
->         // 得出结论： 当执行 beforeUpdate 的时候，页面中的显示的数据，还是旧的，此时 data 数据是最新的，页面尚未和 最新的数据保持同步
->       },
-> ```
+>       /* console.log('界面上元素的内容：' + document.getElementById('h3').innerText)
+>       console.log('data 中的 msg 数据是：' + this.msg) */
+>       // 得出结论： 当执行 beforeUpdate 的时候，页面中的显示的数据，还是旧的，此时 data 数据是最新的，页面尚未和 最新的数据保持同步
+>     },
+>  ```
 >
-> ##### updated 事件执行的时候，页面和 data 数据已经保持同步了，都是最新的
+>  ##### updated 事件执行的时候，页面和 data 数据已经保持同步了，都是最新的
 >
-> ```javascript
->   updated:function() {
->         console.log('界面上元素的内容：' + document.getElementById('h3').innerText)
->         console.log('data 中的 msg 数据是：' + this.msg)
->         // updated 事件执行的时候，页面和 data 数据已经保持同步了，都是最新的
->       }
-> ```
+>  ```javascript
+>  updated:function() {
+>       console.log('界面上元素的内容：' + document.getElementById('h3').innerText)
+>       console.log('data 中的 msg 数据是：' + this.msg)
+>       // updated 事件执行的时候，页面和 data 数据已经保持同步了，都是最新的
+>     }                                                                                                                                                                                                                                                                                                                                                                                                   
+>  ```
 
 
-
-> ##### 在上一阶段Vue已经成功的通过数据驱动DOM更新，当我们不再需要vue操纵DOM时，就要销毁Vue,也就是清除vue实例与DOM的关联，调用destroy方法可以销毁当前组件。在销毁前，会触发beforeDestroy钩子函数。
->
-> ```javascript
-> beforeDestroy :function() {
->                 
->             },
-> ```
-
-
-
-> 在销毁后，会触发destroyed钩子函数。
->
-> ```javascript
->  destroyed: function () {
->                 
->            }
-> ```
-
-
-
-完整的代码
-
-
-```html
-<script>
-    // 创建 Vue 实例，得到 ViewModel
-    var vm = new Vue({
-      el: '#app',
-      data: {
-        msg: 'ok'
-      },
-      methods: {
-        show() {
-          console.log('执行了show方法')
-        }
-      },
-        
-      beforeCreate:function() { // 这是我们遇到的第一个生命周期函数，表示实例完全被创建出来之前，会执行它
-          // console.log(this.msg)
-          // this.show()
-          // 注意： 在 beforeCreate 生命周期函数执行的时候，data 和 methods 中的 数据都还没有没初始化
-      },
-        
-      created:function() { // 这是遇到的第二个生命周期函数
-        // console.log(this.msg)
-        // this.show()
-        //  在 created 中，data 和 methods 都已经被初始化好了！
-        // 如果要调用 methods 中的方法，或者操作 data 中的数据，最早，只能在 created 中操作
-      },
-      
-      beforeMount:function() { // 这是遇到的第3个生命周期函数，表示 模板已经在内存中编辑完成了，但是尚未把 模板渲染到 页面中
-        // console.log(document.getElementById('h3').innerText)
-        // 在 beforeMount 执行的时候，页面中的元素，还没有被真正替换过来，只是之前写的一些模板字符串
-      },
-      mounted:function() { // 这是遇到的第4个生命周期函数，表示，内存中的模板，已经真实的挂载到了页面中，用户已经可以看到渲染好的页面了
-        // console.log(document.getElementById('h3').innerText)
-        // 注意： mounted 是 实例创建期间的最后一个生命周期函数，当执行完 mounted 就表示，实例已经被完全创建好了，此时，如果没有其它操作的话，这个实例，就静静的 躺在我们的内存中，一动不动
-      },
- 
- 
-      // 接下来的是运行中的两个事件
-      beforeUpdate:function() { // 这时候，表示 我们的界面还没有被更新【数据被更新了吗？  数据肯定被更新了】
-        /* console.log('界面上元素的内容：' + document.getElementById('h3').innerText)
-        console.log('data 中的 msg 数据是：' + this.msg) */
-        // 得出结论： 当执行 beforeUpdate 的时候，页面中的显示的数据，还是旧的，此时 data 数据是最新的，页面尚未和 最新的数据保持同步
-      },
-      update:functiond() {
-        console.log('界面上元素的内容：' + document.getElementById('h3').innerText)
-        console.log('data 中的 msg 数据是：' + this.msg)
-        // updated 事件执行的时候，页面和 data 数据已经保持同步了，都是最新的
-      }
-    });
-</script>
-```
